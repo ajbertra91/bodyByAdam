@@ -1,0 +1,32 @@
+{
+  "name": "body",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start": "parcel index.html"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "husky": "^4.2.3",
+    "lit-element": "^2.3.1",
+    "parcel": "^1.12.4",
+    "redux": "^4.0.5"
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "prettier --write"
+    }
+  },
+  "prettier": {
+    "trailingComma": "all",
+    "tabWidth": 4,
+    "semi": false,
+    "singleQuote": true,
+    "quote-props": "consistent",
+    "bracketSpacing": true,
+    "arrowParens": "always"
+  }
+}
