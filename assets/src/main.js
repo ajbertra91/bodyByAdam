@@ -5,4 +5,3 @@ const app = () => {
 }
 
 app();
-
