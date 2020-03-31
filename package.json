@@ -30,5 +30,9 @@
     "quoteProps": "consistent",
     "bracketSpacing": true,
     "arrowParens": "always"
+  },
+  "dependencies": {
+    "pwa-helpers": "^0.9.1",
+    "reselect": "^4.0.0"
   }
 }
