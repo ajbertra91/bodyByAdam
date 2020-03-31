@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "parcel index.html",
+    "start": "cp -R ./assets ./dist && parcel index.html",
     "dev": "parcel watch index.html"
   },
   "keywords": [],
