@@ -3974,7 +3974,7 @@ var _litElement = require("lit-element");
 function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
 
 function _templateObject2() {
-  var data = _taggedTemplateLiteral(["\n            main {\n                position: absolute;\n                top: 0;\n                right: 0;\n                left: 15vw;\n                bottom:0;\n                background: rgb(5,12,83);\n                background: linear-gradient(180deg, rgba(5,12,83,1) 0%, rgba(30,38,122,1) 100%);\n            }\n        "]);
+  var data = _taggedTemplateLiteral(["\n            main {\n                position: absolute;\n                top: 0;\n                right: 0;\n                left: 0;\n                bottom: 10vh;\n                background: rgb(5,12,83);\n                background: linear-gradient(180deg, rgba(5,12,83,1) 0%, rgba(30,38,122,1) 100%);\n            }\n        "]);
 
   _templateObject2 = function _templateObject2() {
     return data;
@@ -5345,6 +5345,8 @@ Object.defineProperty(exports, "__esModule", {
 exports.uuidv4 = uuidv4;
 exports.Filters = exports.setSystemIndicator = exports.setBodySystem = exports.addNote = void 0;
 
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
 function uuidv4() {
   // https://stackoverflow.com/questions/105034/create-guid-uuid-in-javascript
   // All but 6 of the 128 bits of the ID are randomly generated, which means that for any two ids, there's a 1 in 2^^122 (or 5.3x10^^36) chance they'll collide.
@@ -5353,12 +5355,16 @@ function uuidv4() {
   });
 }
 
-var addNote = function addNote(text) {
-  return {
+var addNote = function addNote(_ref) {
+  var title = _ref.title,
+      text = _ref.text,
+      type = _ref.type;
+  return _defineProperty({
     type: 'ADD_NOTE',
     id: uuidv4(),
+    title: title,
     text: text
-  };
+  }, "type", type);
 };
 
 exports.addNote = addNote;
@@ -5381,11 +5387,11 @@ var setSystemIndicator = function setSystemIndicator(filter) {
 
 exports.setSystemIndicator = setSystemIndicator;
 var Filters = {
-  SHOW_CELL: 'SHOW_CELL',
+  SHOW_SKIN: 'SHOW_SKIN',
+  SHOW_MUSCLES: 'SHOW_MUSCLES',
   SHOW_BLOOD: 'SHOW_BLOOD',
   SHOW_NERVES: 'SHOW_NERVES',
   SHOW_SKELETON: 'SHOW_SKELETON',
-  SHOW_ORGANS: 'SHOW_ORGANS',
   SHOW_ACTIVE: 'SHOW_ACTIVE'
 };
 exports.Filters = Filters;
@@ -5405,7 +5411,7 @@ function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { va
 
 function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
 
-var INITIAL_STATE = (0, _actions.setBodySystem)(_actions.Filters.SHOW_ORGANS);
+var INITIAL_STATE = (0, _actions.setBodySystem)(_actions.Filters.SHOW_SKIN);
 
 function bodySystem() {
   var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : INITIAL_STATE;
@@ -5445,7 +5451,27 @@ function _arrayWithoutHoles(arr) { if (Array.isArray(arr)) return _arrayLikeToAr
 
 function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len = arr.length; for (var i = 0, arr2 = new Array(len); i < len; i++) { arr2[i] = arr[i]; } return arr2; }
 
-var INITIAL_STATE = (0, _actions.addNote)('');
+var INITIAL_STATE = [(0, _actions.addNote)({
+  text: '',
+  title: 'Skin',
+  type: _actions.Filters.SHOW_SKIN
+}), (0, _actions.addNote)({
+  text: '',
+  title: 'Muscles',
+  type: _actions.Filters.SHOW_MUSCLES
+}), (0, _actions.addNote)({
+  text: '',
+  title: 'Blood',
+  type: _actions.Filters.SHOW_BLOOD
+}), (0, _actions.addNote)({
+  text: '',
+  title: 'Nerves',
+  type: _actions.Filters.SHOW_NERVES
+}), (0, _actions.addNote)({
+  text: '',
+  title: 'Bones',
+  type: _actions.Filters.SHOW_SKELETON
+})];
 
 function notes() {
   var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : INITIAL_STATE;
@@ -5456,7 +5482,8 @@ function notes() {
       return Object.assign({}, state, {
         notes: [].concat(_toConsumableArray(state.notes), [{
           id: (0, _actions.uuidv4)(),
-          text: action.text
+          text: action.text,
+          type: action.type
         }])
       });
 
@@ -5475,7 +5502,7 @@ exports.systemIndicator = systemIndicator;
 var _actions = require("../actions");
 
 var INITIAL_STATE = {
-  filter: false
+  filter: 'SHOW_SKIN'
 };
 
 function systemIndicator() {
@@ -5555,7 +5582,7 @@ var _actions = require("../actions");
 function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
 
 function _templateObject2() {
-  var data = _taggedTemplateLiteral(["\n            #body-navigation {\n                position: absolute;\n                top:0;\n                left:0;\n                right: 85vw;\n                bottom: 0;\n                overflow: hidden;\n\n                background: rgb(5,12,83);\n            }\n\n            ul {\n                margin: 0;\n                padding: 0;\n                display: flex;\n                flex-direction: column;\n                align-items: flex-end;\n            }\n            li {\n                list-style: none;\n                color: white;\n                width: 100%;\n                height: 10vh;\n                outline: 1px solid red;\n                display: flex;\n                align-items: center;\n                justify-content: center;\n            }\n            a {\n                color: white;\n                flex: 1;\n                height: 100%;\n                width: 100%;\n                vertical-align: middle;\n                text-align: center;\n            }\n            .is-active {\n                background-color: #025ba2;\n            }\n        "]);
+  var data = _taggedTemplateLiteral(["\n            #body-navigation {\n                position: absolute;\n                top:90vh;\n                left:0;\n                right: 0;\n                bottom: 0;\n                overflow: hidden;\n                background: #145a7b;\n            }\n\n            ul {\n                margin: 0;\n                padding: 0;\n                display: flex;\n                flex-direction: row;\n                align-items: flex-end;\n            }\n            li {\n                list-style: none;\n                color: white;\n                width: 100%;\n                height: 10vh;\n                display: flex;\n                align-items: center;\n                justify-content: center;\n            }\n            .is-active {\n                background: cyan;\n                transition: background 0.3s ease;\n            }\n            .is-active svg {\n                fill: currentColor;\n            }\n            a {\n                color: white;\n                flex: 1;\n                height: 100%;\n                width: 100%;\n                line-height: 10vh;\n                vertical-align: middle;\n                text-align: center;\n            }\n        "]);
 
   _templateObject2 = function _templateObject2() {
     return data;
@@ -5565,7 +5592,7 @@ function _templateObject2() {
 }
 
 function _templateObject() {
-  var data = _taggedTemplateLiteral(["\n            <nav id=\"body-navigation\">\n                <ul>\n                    <li>\n                        <a\n                            href=\"#\"\n                            class=\"", "\"\n                            @click=\"", "\"\n                        >Cell</a>\n                    </li>\n                    <li>\n                        <a\n                            href=\"#\"\n                            class=\"", "\"\n                            @click=\"", "\n                        \">Blood</a>\n                    </li>\n                    <li>\n                        <a\n                            href=\"#\"\n                            class=\"", "\"\n                            @click=\"", "\">Nerves</a>\n                    </li>\n                    <li>\n                        <a\n                            href=\"#\"\n                            class=\"", "\"\n                            @click=\"", "\">Skeleton</a>\n                    </li>\n                    <li>\n                        <a\n                            href=\"#\"\n                            class=\"", "\"\n                            @click=\"", "\">Organs</a>\n                    </li>\n                </ul>\n            </nav>\n        "]);
+  var data = _taggedTemplateLiteral(["\n            <nav id=\"body-navigation\">\n                <ul>\n                    <li class=\"", "\">\n                        <a\n                            href=\"#\"\n                            class=\"skin\"\n                            @click=\"", "\"\n                        >Skin</a>\n                    </li>\n                    <li class=\"", "\">\n                        <a\n                            href=\"#\"\n                            class=\"muscles\"\n                            @click=\"", "\n                        \">Muscles</a>\n                    </li>\n                    <li class=\"", "\">\n                        <a\n                            href=\"#\"\n                            class=\"organs\"\n                            @click=\"", "\">Blood</a>\n                    </li>\n                    <li class=\"", "\">\n                        <a\n                            href=\"#\"\n                            class=\"nerves\"\n                            @click=\"", "\">Nerves</a>\n                    </li>\n                    <li class=\"", "\">\n                        <a\n                            href=\"#\"\n                            class=\"bones\"\n                            @click=\"", "\">Skeleton</a>\n                    </li>\n                </ul>\n            </nav>\n        "]);
 
   _templateObject = function _templateObject() {
     return data;
@@ -5615,30 +5642,36 @@ var BodyNavigation = /*#__PURE__*/function (_connect) {
       _configureStore.store.dispatch((0, _actions.setBodySystem)(bodySystem));
     }
   }, {
+    key: "stateChanged",
+    value: function stateChanged() {
+      this.selectedSystem = _configureStore.store.getState().bodySystem.selected;
+      this.requestUpdate();
+    }
+  }, {
     key: "render",
     value: function render() {
       var _this = this;
 
       return (0, _litElement.html)(_templateObject(), (0, _classMap.classMap)({
-        'is-active': _configureStore.store.getState().bodySystem.selected === _actions.Filters.SHOW_CELL
+        'is-active': this.selectedSystem === _actions.Filters.SHOW_SKIN
       }), function (e) {
-        return _this.handleClick(e, _actions.Filters.SHOW_CELL);
+        return _this.handleClick(e, _actions.Filters.SHOW_SKIN);
       }, (0, _classMap.classMap)({
-        'is-active': _configureStore.store.getState().bodySystem.selected === _actions.Filters.SHOW_BLOOD
+        'is-active': this.selectedSystem === _actions.Filters.SHOW_MUSCLES
+      }), function (e) {
+        return _this.handleClick(e, _actions.Filters.SHOW_MUSCLES);
+      }, (0, _classMap.classMap)({
+        'is-active': this.selectedSystem === _actions.Filters.SHOW_BLOOD
       }), function (e) {
         return _this.handleClick(e, _actions.Filters.SHOW_BLOOD);
       }, (0, _classMap.classMap)({
-        'is-active': _configureStore.store.getState().bodySystem.selected === _actions.Filters.SHOW_NERVES
+        'is-active': this.selectedSystem === _actions.Filters.SHOW_NERVES
       }), function (e) {
         return _this.handleClick(e, _actions.Filters.SHOW_NERVES);
       }, (0, _classMap.classMap)({
-        'is-active': _configureStore.store.getState().bodySystem.selected === _actions.Filters.SHOW_SKELETON
+        'is-active': this.selectedSystem === _actions.Filters.SHOW_SKELETON
       }), function (e) {
         return _this.handleClick(e, _actions.Filters.SHOW_SKELETON);
-      }, (0, _classMap.classMap)({
-        'is-active': _configureStore.store.getState().bodySystem.selected === _actions.Filters.SHOW_ORGANS
-      }), function (e) {
-        return _this.handleClick(e, _actions.Filters.SHOW_ORGANS);
       });
     }
   }], [{
@@ -5663,10 +5696,24 @@ exports.BodyNotes = void 0;
 
 var _litElement = require("lit-element");
 
+var _pwaHelpers = require("pwa-helpers");
+
+var _configureStore = require("../store/configureStore");
+
 function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
 
+function _templateObject2() {
+  var data = _taggedTemplateLiteral(["\n            #body-notes {\n                position: absolute;\n                top:0;\n                left:0;\n                right: 0;\n                bottom: 0;\n                background: rgba(80,80,80,1);\n            }\n        "]);
+
+  _templateObject2 = function _templateObject2() {
+    return data;
+  };
+
+  return data;
+}
+
 function _templateObject() {
-  var data = _taggedTemplateLiteral(["\n            <div>\n                NOTES\n            </div>\n        "]);
+  var data = _taggedTemplateLiteral(["\n            <div id=\"body-notes\">\n                <h1>", "</h1>\n                <p>", "</p>\n            </div>\n        "]);
 
   _templateObject = function _templateObject() {
     return data;
@@ -5697,8 +5744,9 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 
 function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
 
-var BodyNotes = /*#__PURE__*/function (_LitElement) {
-  _inherits(BodyNotes, _LitElement);
+// import { setBodySystem, Filters } from '../actions';
+var BodyNotes = /*#__PURE__*/function (_connect) {
+  _inherits(BodyNotes, _connect);
 
   var _super = _createSuper(BodyNotes);
 
@@ -5709,18 +5757,39 @@ var BodyNotes = /*#__PURE__*/function (_LitElement) {
   }
 
   _createClass(BodyNotes, [{
+    key: "stateChanged",
+    value: function stateChanged(state) {
+      this.currentNote = state.notes.filter(function (note) {
+        return note.type === state.bodySystem.selected;
+      })[0];
+    }
+  }, {
     key: "render",
     value: function render() {
-      return (0, _litElement.html)(_templateObject());
+      return (0, _litElement.html)(_templateObject(), this.currentNote.title, this.currentNote.text);
+    }
+  }], [{
+    key: "styles",
+    get: function get() {
+      return (0, _litElement.css)(_templateObject2());
+    }
+  }, {
+    key: "properties",
+    get: function get() {
+      return {
+        currentNote: {
+          type: Object
+        }
+      };
     }
   }]);
 
   return BodyNotes;
-}(_litElement.LitElement);
+}((0, _pwaHelpers.connect)(_configureStore.store)(_litElement.LitElement));
 
 exports.BodyNotes = BodyNotes;
 customElements.define('body-notes', BodyNotes);
-},{"lit-element":"node_modules/lit-element/lit-element.js"}],"src/components/body-system-indicator.js":[function(require,module,exports) {
+},{"lit-element":"node_modules/lit-element/lit-element.js","pwa-helpers":"node_modules/pwa-helpers/pwa-helpers.js","../store/configureStore":"src/store/configureStore.js"}],"src/components/body-system-indicator.js":[function(require,module,exports) {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -5741,7 +5810,7 @@ var _actions = require("../actions");
 function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
 
 function _templateObject2() {
-  var data = _taggedTemplateLiteral(["\n            #body-system-indicator {\n                position: absolute;\n                top: 0;\n                right: 0;\n                bottom: 0;\n                left: 0;\n                background: pink;\n                transition: transform 0.3s ease-in-out;\n                transform: translate3d(-45vw, 35vh, 0) scale(.3);\n\n                overflow: hidden;\n                display: flex;\n                align-items: center;\n                justify-content: center;\n            }\n            #body-system-indicator.is-active {\n                transition: transform 0.3s ease-in-out;\n                transform: translate3d(0, 0, 0) scale(1);\n            }\n            img {\n                height: 100%;\n            }\n        "]);
+  var data = _taggedTemplateLiteral(["\n            #body-system-indicator {\n                position: absolute;\n                top: 0;\n                right: 0;\n                bottom: 0;\n                left: 0;\n\n                overflow: hidden;\n                display: flex;\n                align-items: center;\n                justify-content: center;\n            }\n            .skin {\n                background-image: url('./skin.svg');\n                background-size: 200%;\n                background-position: 50%;\n                background-repeat: no-repeat;\n            }\n            .muscular {\n                background-image: url('./muscular.svg');\n                background-size: 200%;\n                background-position: 50%;\n                background-repeat: no-repeat;\n            }\n            .circulatory {\n                background-image: url('./circulatory.svg');\n                background-size: 200%;\n                background-position: 50%;\n                background-repeat: no-repeat;\n            }\n            .nervous {\n                background-image: url('./nervous.svg');\n                background-size: 200%;\n                background-position: 50%;\n                background-repeat: no-repeat;\n            }\n            .skeletal {\n                background-image: url('./skeletal.svg');\n                background-size: 200%;\n                background-position: 50%;\n                background-repeat: no-repeat;\n            }\n        "]);
 
   _templateObject2 = function _templateObject2() {
     return data;
@@ -5751,7 +5820,7 @@ function _templateObject2() {
 }
 
 function _templateObject() {
-  var data = _taggedTemplateLiteral(["\n            <div id=\"body-system-indicator\" class=\"", "\" @click=\"", "\">\n                <img src=\"", "\" alt=\"body\" />\n            </div>\n        "]);
+  var data = _taggedTemplateLiteral(["\n            <div id=\"body-system-indicator\" class=\"", "\"></div>\n        "]);
 
   _templateObject = function _templateObject() {
     return data;
@@ -5782,6 +5851,14 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 
 function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
 
+var BODY_SYSTEMS = {
+  'SHOW_SKIN': 'skin',
+  'SHOW_MUSCLES': 'muscular',
+  'SHOW_SKELETON': 'skeletal',
+  'SHOW_BLOOD': 'circulatory',
+  'SHOW_NERVES': 'nervous'
+};
+
 var BodySystemIndicator = /*#__PURE__*/function (_connect) {
   _inherits(BodySystemIndicator, _connect);
 
@@ -5796,30 +5873,18 @@ var BodySystemIndicator = /*#__PURE__*/function (_connect) {
   _createClass(BodySystemIndicator, [{
     key: "stateChanged",
     value: function stateChanged(state) {
-      this.imagePath = "../assets/".concat(state.bodySystem.selected, ".jpg");
       this.showCss = {
-        'is-active': state.systemIndicator.filter
-      };
-    }
-  }, {
-    key: "clickHandler",
-    value: function clickHandler(e) {
-      e.preventDefault();
-
-      _configureStore.store.dispatch((0, _actions.setSystemIndicator)(!_configureStore.store.getState().systemIndicator.filter));
-
-      this.showCss = {
-        'is-active': _configureStore.store.getState().systemIndicator.filter
+        'skin': state.bodySystem.selected === 'SHOW_SKIN',
+        'muscular': state.bodySystem.selected === 'SHOW_MUSCLES',
+        'circulatory': state.bodySystem.selected === 'SHOW_BLOOD',
+        'nervous': state.bodySystem.selected === 'SHOW_NERVES',
+        'skeletal': state.bodySystem.selected === 'SHOW_SKELETON'
       };
     }
   }, {
     key: "render",
     value: function render() {
-      var _this = this;
-
-      return (0, _litElement.html)(_templateObject(), (0, _classMap.classMap)(this.showCss), function (e) {
-        return _this.clickHandler(e);
-      }, this.imagePath);
+      return (0, _litElement.html)(_templateObject(), (0, _classMap.classMap)(this.showCss));
     }
   }], [{
     key: "styles",
@@ -5832,9 +5897,6 @@ var BodySystemIndicator = /*#__PURE__*/function (_connect) {
       return {
         showCss: {
           type: Boolean
-        },
-        imagePath: {
-          type: String
         }
       };
     }
@@ -5883,7 +5945,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "56795" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "55556" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};
@@ -6060,4 +6122,4 @@ function hmrAcceptRun(bundle, id) {
   }
 }
 },{}]},{},["node_modules/parcel/src/builtins/hmr-runtime.js","index.js"], null)
-//# sourceMappingURL=/body.e31bb0bc.js.map
+//# sourceMappingURL=/bodyByAdam.e31bb0bc.js.map

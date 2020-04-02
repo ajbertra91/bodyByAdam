@@ -4,6 +4,14 @@ import { connect } from 'pwa-helpers';
 import { store } from '../store/configureStore';
 import { setSystemIndicator } from '../actions';
 
+const BODY_SYSTEMS = {
+    'SHOW_SKIN': 'skin',
+    'SHOW_MUSCLES': 'muscular',
+    'SHOW_SKELETON': 'skeletal',
+    'SHOW_BLOOD': 'circulatory',
+    'SHOW_NERVES': 'nervous'
+}
+
 export class BodySystemIndicator extends connect(store)(LitElement) {
     static get styles() {
         return css`
@@ -13,48 +21,64 @@ export class BodySystemIndicator extends connect(store)(LitElement) {
                 right: 0;
                 bottom: 0;
                 left: 0;
-                background: pink;
-                transition: transform 0.3s ease-in-out;
-                transform: translate3d(-45vw, 35vh, 0) scale(.3);
 
                 overflow: hidden;
                 display: flex;
                 align-items: center;
                 justify-content: center;
             }
-            #body-system-indicator.is-active {
-                transition: transform 0.3s ease-in-out;
-                transform: translate3d(0, 0, 0) scale(1);
+            .skin {
+                background-image: url('./skin.svg');
+                background-size: 200%;
+                background-position: 50%;
+                background-repeat: no-repeat;
             }
-            img {
-                height: 100%;
+            .muscular {
+                background-image: url('./muscular.svg');
+                background-size: 200%;
+                background-position: 50%;
+                background-repeat: no-repeat;
+            }
+            .circulatory {
+                background-image: url('./circulatory.svg');
+                background-size: 200%;
+                background-position: 50%;
+                background-repeat: no-repeat;
+            }
+            .nervous {
+                background-image: url('./nervous.svg');
+                background-size: 200%;
+                background-position: 50%;
+                background-repeat: no-repeat;
+            }
+            .skeletal {
+                background-image: url('./skeletal.svg');
+                background-size: 200%;
+                background-position: 50%;
+                background-repeat: no-repeat;
             }
         `;
     }
 
     static get properties() {
         return {
-            showCss: {type: Boolean},
-            imagePath: {type: String}
+            showCss: {type: Boolean}
         }
     }
 
     stateChanged(state) {
-        this.imagePath = `../assets/${state.bodySystem.selected}.jpg`;
-        this.showCss = { 'is-active': state.systemIndicator.filter };
-    }
-
-    clickHandler(e) {
-        e.preventDefault();
-        store.dispatch(setSystemIndicator(!store.getState().systemIndicator.filter));
-        this.showCss = { 'is-active': store.getState().systemIndicator.filter };
+        this.showCss = {
+            'skin': state.bodySystem.selected === 'SHOW_SKIN',
+            'muscular': state.bodySystem.selected === 'SHOW_MUSCLES',
+            'circulatory': state.bodySystem.selected === 'SHOW_BLOOD',
+            'nervous': state.bodySystem.selected === 'SHOW_NERVES',
+            'skeletal': state.bodySystem.selected === 'SHOW_SKELETON',
+        };
     }
 
     render() {
         return html`
-            <div id="body-system-indicator" class="${classMap(this.showCss)}" @click="${e => this.clickHandler(e)}">
-                <img src="${this.imagePath}" alt="body" />
-            </div>
+            <div id="body-system-indicator" class="${classMap(this.showCss)}"></div>
         `;
     }
 }

@@ -6,10 +6,12 @@ export function uuidv4() {
     );
 }
 
-export const addNote = text => ({
+export const addNote = ({title,text,type}) => ({
     type: 'ADD_NOTE',
     id: uuidv4(),
-    text
+    title,
+    text,
+    type
 })
 
 export const setBodySystem = selected => ({
@@ -23,10 +25,10 @@ export const setSystemIndicator = filter => ({
 })
 
 export const Filters = {
-    SHOW_CELL: 'SHOW_CELL',
+    SHOW_SKIN: 'SHOW_SKIN',
+    SHOW_MUSCLES: 'SHOW_MUSCLES',
     SHOW_BLOOD: 'SHOW_BLOOD',
     SHOW_NERVES: 'SHOW_NERVES',
     SHOW_SKELETON: 'SHOW_SKELETON',
-    SHOW_ORGANS: 'SHOW_ORGANS',
-    SHOW_ACTIVE: 'SHOW_ACTIVE'
+    SHOW_ACTIVE: 'SHOW_ACTIVE',
 }

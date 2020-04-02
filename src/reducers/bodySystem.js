@@ -1,6 +1,6 @@
 import { setBodySystem, Filters } from '../actions';
 
-const INITIAL_STATE = setBodySystem(Filters.SHOW_ORGANS);
+const INITIAL_STATE = setBodySystem(Filters.SHOW_SKIN);
 
 export function bodySystem(state = INITIAL_STATE, action) {
     switch (action.type) {

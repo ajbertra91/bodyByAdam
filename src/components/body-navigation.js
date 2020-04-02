@@ -9,20 +9,19 @@ export class BodyNavigation extends connect(store)(LitElement) {
         return css`
             #body-navigation {
                 position: absolute;
-                top:0;
+                top:90vh;
                 left:0;
-                right: 85vw;
+                right: 0;
                 bottom: 0;
                 overflow: hidden;
-
-                background: rgb(5,12,83);
+                background: #145a7b;
             }
 
             ul {
                 margin: 0;
                 padding: 0;
                 display: flex;
-                flex-direction: column;
+                flex-direction: row;
                 align-items: flex-end;
             }
             li {
@@ -30,21 +29,25 @@ export class BodyNavigation extends connect(store)(LitElement) {
                 color: white;
                 width: 100%;
                 height: 10vh;
-                outline: 1px solid red;
                 display: flex;
                 align-items: center;
                 justify-content: center;
+            }
+            .is-active {
+                background: cyan;
+                transition: background 0.3s ease;
+            }
+            .is-active svg {
+                fill: currentColor;
             }
             a {
                 color: white;
                 flex: 1;
                 height: 100%;
                 width: 100%;
+                line-height: 10vh;
                 vertical-align: middle;
                 text-align: center;
-            }
-            .is-active {
-                background-color: #025ba2;
             }
         `;
     }
@@ -54,44 +57,49 @@ export class BodyNavigation extends connect(store)(LitElement) {
         store.dispatch(setBodySystem(bodySystem))
     }
 
+    stateChanged() {
+        this.selectedSystem = store.getState().bodySystem.selected;
+        this.requestUpdate();
+    }
+
     render() {
         return html`
             <nav id="body-navigation">
                 <ul>
-                    <li>
+                    <li class="${classMap({ 'is-active': this.selectedSystem === Filters.SHOW_SKIN })}">
                         <a
                             href="#"
-                            class="${classMap({ 'is-active': store.getState().bodySystem.selected === Filters.SHOW_CELL })}"
-                            @click="${e => this.handleClick(e, Filters.SHOW_CELL)}"
-                        >Cell</a>
+                            class="skin"
+                            @click="${e => this.handleClick(e, Filters.SHOW_SKIN)}"
+                        >Skin</a>
                     </li>
-                    <li>
+                    <li class="${classMap({ 'is-active': this.selectedSystem === Filters.SHOW_MUSCLES })}">
                         <a
                             href="#"
-                            class="${classMap({ 'is-active': store.getState().bodySystem.selected === Filters.SHOW_BLOOD })}"
-                            @click="${e => this.handleClick(e, Filters.SHOW_BLOOD)}
-                        ">Blood</a>
+                            class="muscles"
+                            @click="${e => this.handleClick(e, Filters.SHOW_MUSCLES)}
+                        ">Muscles</a>
                     </li>
-                    <li>
+                    <li class="${classMap({ 'is-active': this.selectedSystem === Filters.SHOW_BLOOD })}">
                         <a
                             href="#"
-                            class="${classMap({ 'is-active': store.getState().bodySystem.selected === Filters.SHOW_NERVES })}"
+                            class="organs"
+                            @click="${e => this.handleClick(e, Filters.SHOW_BLOOD)
+                    }">Blood</a>
+                    </li>
+                    <li class="${classMap({ 'is-active': this.selectedSystem === Filters.SHOW_NERVES })}">
+                        <a
+                            href="#"
+                            class="nerves"
                             @click="${e => this.handleClick(e, Filters.SHOW_NERVES)
                     }">Nerves</a>
                     </li>
-                    <li>
+                    <li class="${classMap({ 'is-active': this.selectedSystem === Filters.SHOW_SKELETON })}">
                         <a
                             href="#"
-                            class="${classMap({ 'is-active': store.getState().bodySystem.selected === Filters.SHOW_SKELETON })}"
+                            class="bones"
                             @click="${e => this.handleClick(e, Filters.SHOW_SKELETON)
                     }">Skeleton</a>
-                    </li>
-                    <li>
-                        <a
-                            href="#"
-                            class="${classMap({ 'is-active': store.getState().bodySystem.selected === Filters.SHOW_ORGANS })}"
-                            @click="${e => this.handleClick(e, Filters.SHOW_ORGANS)
-                    }">Organs</a>
                     </li>
                 </ul>
             </nav>

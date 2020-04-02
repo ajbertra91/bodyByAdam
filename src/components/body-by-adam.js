@@ -7,8 +7,8 @@ export class BodyByAdam extends LitElement {
                 position: absolute;
                 top: 0;
                 right: 0;
-                left: 15vw;
-                bottom:0;
+                left: 0;
+                bottom: 10vh;
                 background: rgb(5,12,83);
                 background: linear-gradient(180deg, rgba(5,12,83,1) 0%, rgba(30,38,122,1) 100%);
             }
